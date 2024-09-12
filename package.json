@@ -1,0 +1,93 @@
+{
+  "name": "codecommitlinker",
+  "displayName": "CodeCommit Linker",
+  "description": "Generates and opens URLs for AWS CodeCommit repositories directly from VS Code.",
+  "version": "1.0.0",
+  "publisher": "rob-dhondt",
+  "engines": {
+    "vscode": "^1.1.37"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "workspaceContains:.git/",
+    "onCommand:codecommitlinker.generateLink",
+    "onCommand:codecommitlinker.openInBrowser"
+  ],
+  "main": "./out/extension.js",
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "test": "jest",
+    "format": "prettier --write .",
+    "lint": "eslint 'src/**/*.{ts,tsx}' --fix",
+    "package": "vsce package --out dist/codecommitlinker.vsix"
+  },
+  "contributes": {
+    "commands": [
+      {
+        "command": "codecommitlinker.generateLink",
+        "title": "Generate URL for CodeCommit",
+        "category": "CodeCommit"
+      },
+      {
+        "command": "codecommitlinker.openInBrowser",
+        "title": "Open CodeCommit in Browser",
+        "category": "CodeCommit"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "codecommitlinker.generateLink",
+          "group": "9_cutcopypaste@10"
+        },
+        {
+          "command": "codecommitlinker.openInBrowser",
+          "group": "9_cutcopypaste@20"
+        }
+      ]
+    },
+    "configuration": {
+      "type": "object",
+      "title": "CodeCommit Linker Configuration",
+      "properties": {
+        "codecommitlinker.repositoryName": {
+          "type": "string",
+          "default": "DefaultRepoName",
+          "description": "The name of the repository to be used in CodeCommit URLs"
+        },
+        "codecommitlinker.repositoryBranch": {
+          "type": "string",
+          "default": "main",
+          "description": "The default branch to be used in CodeCommit URLs"
+        },
+        "codecommitlinker.region": {
+          "type": "string",
+          "default": "us-east-1",
+          "description": "The AWS region of the CodeCommit repository"
+        }
+      }
+    }
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.13",
+    "@types/node": "^22.5.4",
+    "@types/vscode": "^1.1.37",
+    "@typescript-eslint/eslint-plugin": "^8.5.0",
+    "@typescript-eslint/parser": "^8.5.0",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "jest": "^29.7.0",
+    "prettier": "^3.3.3",
+    "ts-jest": "^29.2.5",
+    "typescript": "^5.5.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yeahthisisrob/codecommit-linker.git"
+  }
+}
